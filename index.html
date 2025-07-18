@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>邮票收藏馆</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8B5A2B',
+                        secondary: '#D2B48C',
+                        accent: '#CD853F',
+                        light: '#F5F5DC',
+                        dark: '#3E2723'
+                    },
+                    fontFamily: {
+                        serif: ['Georgia', 'Cambria', 'Times New Roman', 'serif'],
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .stamp-shadow {
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(139, 90, 43, 0.3);
+            }
+            .stamp-hover {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .stamp-hover:hover {
+                transform: translateY(-5px) scale(1.02);
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(139, 90, 43, 0.5);
+            }
+            .scroll-smooth {
+                scroll-behavior: smooth;
+            }
+        }
+    </style>
+</head>
+<body class="bg-light font-sans text-dark scroll-smooth">
+    <!-- 头部导航 -->
+    <header class="bg-primary text-white shadow-md sticky top-0 z-50 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fa fa-envelope-o text-2xl" aria-hidden="true"></i>
+                <h1 class="text-xl md:text-2xl font-serif font-bold">邮票收藏馆</h1>
+            </div>
+            <nav class="hidden md:flex space-x-6">
+                <a href="#home" class="hover:text-secondary transition-colors duration-200">首页</a>
+                <a href="#featured" class="hover:text-secondary transition-colors duration-200">精选邮票</a>
+                <a href="#collections" class="hover:text-secondary transition-colors duration-200">邮票系列</a>
+                <a href="#about" class="hover:text-secondary transition-colors duration-200">关于我们</a>
+                <a href="#contact" class="hover:text-secondary transition-colors duration-200">联系我们</a>
+            </nav>
+            <button class="md:hidden text-white text-xl" id="menu-toggle">
+                <i class="fa fa-bars" aria-hidden="true"></i>
+            </button>
+        </div>
+        <!-- 移动端菜单 -->
+        <div class="md:hidden hidden bg-primary/95 absolute w-full" id="mobile-menu">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="#home" class="hover:text-secondary transition-colors duration-200 py-2">首页</a>
+                <a href="#featured" class="hover:text-secondary transition-colors duration-200 py-2">精选邮票</a>
+                <a href="#collections" class="hover:text-secondary transition-colors duration-200 py-2">邮票系列</a>
+                <a href="#about" class="hover:text-secondary transition-colors duration-200 py-2">关于我们</a>
+                <a href="#contact" class="hover:text-secondary transition-colors duration-200 py-2">联系我们</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section id="home" class="relative h-[80vh] flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://picsum.photos/id/1073/1920/1080" alt="邮票背景" class="w-full h-full object-cover opacity-40">
+            <div class="absolute inset-0 bg-gradient-to-r from-primary/70 to-dark/50"></div>
+        </div>
+        <div class="container mx-auto px-4 z-10 text-white">
+            <div class="max-w-2xl">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 leading-tight">
+                    探索邮票的<br>艺术与历史
+                </h1>
+                <p class="text-lg md:text-xl mb-8 text-light/90">
+                    每一枚邮票都是一段历史的见证，一次文化的交流，一种艺术的表达。
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#featured" class="bg-accent hover:bg-accent/90 text-white px-6 py-3 rounded-md transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                        浏览邮票 <i class="fa fa-arrow-right ml-2"></i>
+                    </a>
+                    <a href="#about" class="bg-transparent border-2 border-white hover:bg-white/10 text-white px-6 py-3 rounded-md transition-all duration-300">
+                        了解更多
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <a href="#featured" class="text-white text-3xl opacity-80 hover:opacity-100 transition-opacity">
+                <i class="fa fa-chevron-down" aria-hidden="true"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- 精选邮票 -->
+    <section id="featured" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">精选邮票</h2>
+                <div class="w-24 h-1 bg-accent mx-auto mb-4"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto">这些是我们收藏中最具代表性和历史价值的邮票，每一枚都有其独特的故事和艺术价值。</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 邮票卡片 1 -->
+                <div class="bg-light rounded-lg overflow-hidden stamp-shadow stamp-hover">
+                    <div class="relative overflow-hidden">
+                        <img src="https://picsum.photos/id/101/600/400" alt="古典邮票" class="w-full h-64 object-cover transition-transform duration-500 hover:scale-110">
+                        <div class="absolute top-3 left-3 bg-accent text-white text-sm font-bold px-3 py-1 rounded-full">
+                            稀有
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-serif font-bold mb-2 text-primary">19世纪古典邮票</h3>
+                        <p class="text-gray-600 mb-4">这枚邮票发行于1840年，是世界上最早的邮票之一，具有极高的历史价值。</p>
+                        <div class="flex justify-between items-center">
+                            <div class="text-sm text-gray-500">
+                                <span class="block"><i class="fa fa-calendar-o mr-1"></i> 发行年份: 1840</span>
+                                <span class="block"><i class="fa fa-map-marker mr-1"></i> 发行国家: 英国</span>
+                            </div>
+                            <span class="text-accent font-bold text-xl">¥12,500</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 邮票卡片 2 -->
+                <div class="bg-light rounded-lg overflow-hidden stamp-shadow stamp-hover">
+                    <div class="relative overflow-hidden">
+                        <img src="https://picsum.photos/id/102/600/400" alt="纪念邮票" class="w-full h-64 object-cover transition-transform duration-500 hover:scale-110">
+                        <div class="absolute top-3 left-3 bg-primary text-white text-sm font-bold px-3 py-1 rounded-full">
+                            纪念
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-serif font-bold mb-2 text-primary">建国纪念邮票</h3>
+                        <p class="text-gray-600 mb-4">为纪念建国而发行的特种邮票，设计精美，色彩鲜艳，具有重要的纪念意义。</p>
+                        <div class="flex justify-between items-center">
+                            <div class="text-sm text-gray-500">
+                                <span class="block"><i class="fa fa-calendar-o mr-1"></i> 发行年份: 1949</span>
+                                <span class="block"><i class="fa fa-map-marker mr-1"></i> 发行国家: 中国</span>
+                            </div>
+                            <span class="text-accent font-bold text-xl">¥8,200</span>
+                        </div>
+                    </div>
+                </div>
+              
+                <!-- 邮票卡片 3 -->
+                <div class="bg-light rounded-lg overflow-hidden stamp-shadow stamp-hover">
+                    <div class="relative overflow-hidden">
+                        <img src="https://picsum.photos/id/103/600/400" alt="艺术邮票" class="w-full h-64 object-cover transition-transform duration-500 hover:scale-110">
+                        <div class="absolute top-3 left-3 bg-secondary text-dark text-sm font-bold px-3 py-1 rounded-full">
+                            艺术
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-serif font-bold mb-2 text-primary">印象派艺术邮票</h3>
+                        <p class="text-gray-600 mb-4">这套邮票收录了莫奈、雷诺阿等印象派大师的经典作品，是艺术与邮政的完美结合。</p>
+                        <div class="flex justify-between items-center">
+                            <div class="text-sm text-gray-500">
+                                <span class="block"><i class="fa fa-calendar-o mr-1"></i> 发行年份: 1976</span>
+                                <span class="block"><i class="fa fa-map-marker mr-1"></i> 发行国家: 法国</span>
+                            </div>
+                            <span class="text-accent font-bold text-xl">¥5,800</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="#" class="inline-block border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-3 rounded-md transition-all duration-300 font-medium">
+                    查看更多邮票 <i class="fa fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 邮票系列 -->
+    <section id="collections" class="py-16 bg-light/50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">邮票系列</h2>
+                <div class="w-24 h-1 bg-accent mx-auto mb-4"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto">我们按主题整理了不同系列的邮票，方便您根据兴趣进行浏览和收藏。</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- 系列卡片 1 -->
+                <div class="group relative rounded-lg overflow-hidden h-64 stamp-shadow">
+                    <img src="https://picsum.photos/id/104/600/800" alt="历史人物系列" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent flex flex-col justify-end p-6 text-white">
+                        <h3 class="text-xl font-serif font-bold mb-2 group-hover:text-secondary transition-colors">历史人物系列</h3>
+                        <p class="text-sm text-white/80 mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            收录了各国历史上杰出人物的肖像邮票，见证伟人风采。
+                        </p>
+                        <a href="#" class="inline-block text-secondary text-sm font-medium">
+                            查看系列 <i class="fa fa-long-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 系列卡片 2 -->
+                <div class="group relative rounded-lg overflow-hidden h-64 stamp-shadow">
+                    <img src="https://picsum.photos/id/105/600/800" alt="自然风光系列" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent flex flex-col justify-end p-6 text-white">
+                        <h3 class="text-xl font-serif font-bold mb-2 group-hover:text-secondary transition-colors">自然风光系列</h3>
+                        <p class="text-sm text-white/80 mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            展示世界各地壮丽的自然景观，从山脉到海洋，美不胜收。
+                        </p>
+                        <a href="#" class="inline-block text-secondary text-sm font-medium">
+                            查看系列 <i class="fa fa-long-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 系列卡片 3 -->
+                <div class="group relative rounded-lg overflow-hidden h-64 stamp-shadow">
+                    <img src="https://picsum.photos/id/106/600/800" alt="文化遗产系列" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent flex flex-col justify-end p-6 text-white">
+                        <h3 class="text-xl font-serif font-bold mb-2 group-hover:text-secondary transition-colors">文化遗产系列</h3>
+                        <p class="text-sm text-white/80 mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            记录世界文化遗产的精美邮票，传承人类文明的瑰宝。
+                        </p>
+                        <a href="#" class="inline-block text-secondary text-sm font-medium">
+                            查看系列 <i class="fa fa-long-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 系列卡片 4 -->
+                <div class="group relative rounded-lg overflow-hidden h-64 stamp-shadow">
+                    <img src="https://picsum.photos/id/107/600/800" alt="动植物系列" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent flex flex-col justify-end p-6 text-white">
+                        <h3 class="text-xl font-serif font-bold mb-2 group-hover:text-secondary transition-colors">动植物系列</h3>
+                        <p class="text-sm text-white/80 mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            展现地球上丰富多样的动植物物种，呼吁环境保护意识。
+                        </p>
+                        <a href="#" class="inline-block text-secondary text-sm font-medium">
+                            查看系列 <i class="fa fa-long-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 邮票详情模态框 -->
+    <div id="stamp-modal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-auto transform transition-all">
+            <div class="flex justify-end p-4">
+                <button id="close-modal" class="text-gray-500 hover:text-dark text-xl">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="p-4 md:p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="relative">
+                        <img id="modal-stamp-img" src="https://picsum.photos/id/101/800/600" alt="邮票大图" class="w-full h-auto rounded-lg stamp-shadow">
+                        <div class="absolute top-3 right-3 bg-accent text-white text-sm font-bold px-3 py-1 rounded-full">
+                            稀有
+                        </div>
+                    </div>
+                    <div>
+                        <h3 id="modal-stamp-title" class="text-2xl font-serif font-bold text-primary mb-2">19世纪古典邮票</h3>
+                        <p id="modal-stamp-description" class="text-gray-600 mb-6">
+                            这枚邮票发行于1840年5月1日，是世界上第一枚邮票，由英国邮政局发行，设计者是罗兰·希尔爵士。邮票面值为一便士，因此被称为"黑便士"。它的发行标志着现代邮政制度的开始，具有里程碑式的意义。
+                        </p>
+                      
+                        <div class="bg-light p-4 rounded-lg mb-6">
+                            <h4 class="font-bold text-primary mb-3 border-b border-secondary pb-2">邮票详情</h4>
+                            <ul class="space-y-2">
+                                <li class="flex justify-between">
+                                    <span class="text-gray-600"><i class="fa fa-calendar-o mr-2 text-accent"></i>发行年份</span>
+                                    <span id="modal-stamp-year" class="font-medium">1840</span>
+                                </li>
+                                <li class="flex justify-between">
+                                    <span class="text-gray-600"><i class="fa fa-map-marker mr-2 text-accent"></i>发行国家</span>
+                                    <span id="modal-stamp-country" class="font-medium">英国</span>
+                                </li>
+                                <li class="flex justify-between">
+                                    <span class="text-gray-600"><i class="fa fa-tag mr-2 text-accent"></i>邮票类型</span>
+                                    <span id="modal-stamp-type" class="font-medium">普通邮票</span>
+                                </li>
+                                <li class="flex justify-between">
+                                    <span class="text-gray-600"><i class="fa fa-paint-brush mr-2 text-accent"></i>设计风格</span>
+                                    <span id="modal-stamp-style" class="font-medium">古典主义</span>
+                                </li>
+                                <li class="flex justify-between">
+                                    <span class="text-gray-600"><i class="fa fa-tint mr-2 text-accent"></i>印刷颜色</span>
+                                    <span id="modal-stamp-color" class="font-medium">黑色</span>
+                                </li>
+                            </ul>
+                        </div>
+                      
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                            <div>
+                                <span id="modal-stamp-price" class="text-3xl font-bold text-accent">¥12,500</span>
+                                <p class="text-gray-500 text-sm mt-1">价格可能随市场波动</p>
+                            </div>
+                            <button class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-md transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1 w-full sm:w-auto">
+                                <i class="fa fa-shopping-cart mr-2"></i> 加入收藏
+                            </button>
+                        </div>
+                    </div>
+                </div>
+              
+                <div class="mt-8">
+                    <h4 class="font-bold text-xl text-primary mb-4">邮票故事</h4>
+                    <div class="prose max-w-none text-gray-700">
+                        <p>
+                            "黑便士"邮票的诞生源于19世纪30年代英国的邮政改革。当时，邮寄信件的费用非常昂贵，并且是由收件人支付，这导致了许多人拒收邮件。罗兰·希尔爵士提出了一项改革计划，建议采用统一的邮资，并由寄件人预先支付。
+                        </p>
+                        <p>
+                            1840年5月1日，世界上第一枚邮票正式发行。这枚邮票以维多利亚女王的肖像为图案，面值一便士，采用黑色印刷，因此被称为"黑便士"。邮票的边缘采用齿孔设计，方便分离，这一设计一直沿用至今。
+                        </p>
+                        <p>
+                            黑便士邮票的发行取得了巨大成功，邮政业务量大幅增长。随后，许多国家纷纷效仿英国，发行了自己的邮票。如今，黑便士邮票已成为世界邮票收藏中的珍品，品相完好的黑便士邮票在拍卖市场上的价格屡创新高。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 关于我们 -->
+    <section id="about" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-serif font-bold text-primary mb-6">关于邮票收藏馆</h2>
+                    <div class="w-16 h-1 bg-accent mb-6"></div>
+                    <p class="text-gray-600 mb-4">
+                        邮票收藏馆成立于1990年，是一家致力于邮票收藏、研究和展示的专业机构。我们拥有超过10,000枚来自世界各地的珍贵邮票，涵盖了从19世纪初到现代的各个时期。
+                    </p>
+                    <p class="text-gray-600 mb-6">
+                        我们的使命是通过邮票这一独特的文化载体，向公众展示世界各国的历史、文化和艺术成就，促进国际文化交流，培养人们对邮票收藏的兴趣。
+                    </p>
+                  
+                    <div class="grid grid-cols-2 gap-6 mb-8">
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-secondary/20 p-3 rounded-full text-accent">
+                                <i class="fa fa-certificate text-xl" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg mb-2">专业鉴定</h3>
+                                <p class="text-gray-600 text-sm">所有邮票均经过权威专家鉴定，确保真伪和品质</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-secondary/20 p-3 rounded-full text-accent">
+                                <i class="fa fa-shield text-xl" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg mb-2">安全收藏</h3>
+                                <p class="text-gray-600 text-sm">采用专业收藏设备，确保邮票长期保存完好</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-secondary/20 p-3 rounded-full text-accent">
+                                <i class="fa fa-users text-xl" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg mb-2">专家团队</h3>
+                                <p class="text-gray-600 text-sm">拥有多名邮票收藏领域的专家和研究人员</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-secondary/20 p-3 rounded-full text-accent">
+                                <i class="fa fa-globe text-xl" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg mb-2">全球视野</h3>
+                                <p class="text-gray-600 text-sm">收藏来自世界各地的邮票，展现多元文化</p>
+                            </div>
+                        </div>
+                    </div>
+                  
+                    <a href="#" class="inline-block bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-md transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1">
+                        了解更多关于我们 <i class="fa fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+              
+                <div class="relative">
+                    <div class="aspect-square rounded-lg overflow-hidden stamp-shadow">
+                        <img src="https://picsum.photos/id/108/800/800" alt="邮票收藏馆" class="w-full h-full object-cover">
+                    </div>
+                    <div class="absolute -bottom-6 -left-6 w-48 h-48 bg-secondary rounded-lg overflow-hidden stamp-shadow hidden md:block">
+                        <img src="https://picsum.photos/id/109/300/300" alt="邮票展览" class="w-full h-full object-cover">
+                    </div>
+                    <div class="absolute -top-6 -right-6 w-40 h-40 bg-accent rounded-lg flex items-center justify-center text-white text-center p-4 hidden md:flex">
+                        <div>
+                            <p class="text-3xl font-bold">30+</p>
+                            <p class="text-sm">年专业收藏经验</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 订阅区域 -->
+    <section class="py-16 bg-primary text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-serif font-bold mb-4">订阅邮票资讯</h2>
+            <p class="max-w-2xl mx-auto mb-8 text-white/80">
+                订阅我们的电子邮件，获取最新的邮票收藏资讯、市场动态和独家优惠信息。
+            </p>
+            <form class="max-w-lg mx-auto flex flex-col sm:flex-row gap-3">
+                <input type="email" placeholder="您的电子邮箱地址" class="flex-grow px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-secondary text-dark">
+                <button type="submit" class="bg-accent hover:bg-accent/90 text-white px-6 py-3 rounded-md transition-all duration-300 font-medium whitespace-nowrap">
+                    立即订阅 <i class="fa fa-paper-plane ml-2"></i>
+                </button>
+            </form>
+            <p class="text-sm text-white/60 mt-4">
+                我们尊重您的隐私，不会向第三方分享您的信息。
+            </p>
+        </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section id="contact" class="py-16 bg-light/50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">联系我们</h2>
+                <div class="w-24 h-1 bg-accent mx-auto mb-4"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto">如果您对邮票收藏有任何问题或建议，欢迎随时与我们联系。我们的专业团队将竭诚为您服务。</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div>
+                    <form class="bg-white p-6 rounded-lg shadow-md">
+                        <div class="mb-4">
+                            <label for="name" class="block text-gray-700 mb-2">您的姓名</label>
+                            <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent">
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="block text-gray-700 mb-2">电子邮箱</label>
+                            <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent">
+                        </div>
+                        <div class="mb-4">
+                            <label for="subject" class="block text-gray-700 mb-2">主题</label>
+                            <select id="subject" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent">
+                                <option value="">请选择一个主题</option>
+                                <option value="inquiry">邮票咨询</option>
+                                <option value="purchase">购买邮票</option>
+                                <option value="appraisal">邮票鉴定</option>
+                                <option value="collaboration">合作洽谈</option>
+                                <option value="other">其他问题</option>
+                            </select>
+                        </div>
+                        <div class="mb-6">
+                            <label for="message" class="block text-gray-700 mb-2">留言内容</label>
+                            <textarea id="message" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-md transition-all duration-300 shadow hover:shadow-lg transform hover:-translate-y-1">
+                            发送留言 <i class="fa fa-paper-plane ml-2"></i>
+                        </button>
+                    </form>
+                </div>
+              
+                <div>
+                    <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                        <h3 class="text-xl font-serif font-bold text-primary mb-4">联系方式</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-secondary/20 p-3 rounded-full text-accent">
+                                    <i class="fa fa-map-marker text-xl" aria-hidden="true"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">地址</h4>
+                                    <p class="text-gray-600">北京市东城区王府井大街88号邮票收藏馆</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-secondary/20 p-3 rounded-full text-accent">
+                                    <i class="fa fa-phone text-xl" aria-hidden="true"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">电话</h4>
+                                    <p class="text-gray-600">+86 10 8888 8888</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-secondary/20 p-3 rounded-full text-accent">
+                                    <i class="fa fa-envelope text-xl" aria-hidden="true"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">电子邮箱</h4>
+                                    <p class="text-gray-600">info@stampcollection.com</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-secondary/20 p-3 rounded-full text-accent">
+                                    <i class="fa fa-clock-o text-xl" aria-hidden="true"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">开放时间</h4>
+                                    <p class="text-gray-600">周二至周日: 9:00 - 17:00</p>
+                                    <p class="text-gray-600">周一闭馆 (法定节假日除外)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-serif font-bold text-primary mb-4">关注我们</h3>
+                        <p class="text-gray-600 mb-4">通过社交媒体关注我们，获取最新展览和活动信息。</p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="bg-[#1877F2] hover:bg-[#1877F2]/90 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                                <i class="fa fa-facebook" aria-hidden="true"></i>
+                            </a>
+                            <a href="#" class="bg-[#1DA1F2] hover:bg-[#1DA1F2]/90 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                                <i class="fa fa-twitter" aria-hidden="true"></i>
+                            </a>
+                            <a href="#" class="bg-[#E4405F] hover:bg-[#E4405F]/90 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                                <i class="fa fa-instagram" aria-hidden="true"></i>
+                            </a>
+                            <a href="#" class="bg-[#FF0000] hover:bg-[#FF0000]/90 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                                <i class="fa fa-youtube-play" aria-hidden="true"></i>
+                            </a>
+                            <a href="#" class="bg-[#25D366] hover:bg-[#25D366]/90 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                                <i class="fa fa-whatsapp" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fa fa-envelope-o text-2xl text-secondary" aria-hidden="true"></i>
+                        <h3 class="text-xl font-serif font-bold">邮票收藏馆</h3>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        专注于邮票收藏、研究与展示，传承邮票文化，连接世界各地的邮票爱好者。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-secondary transition-colors">
+                            <i class="fa fa-facebook" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-secondary transition-colors">
+                            <i class="fa fa-twitter" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-secondary transition-colors">
+                            <i class="fa fa-instagram" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-secondary transition-colors">
+                            <i class="fa fa-youtube-play" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+              
+                <div>
+                    <h4 class="text-lg font-bold mb-4 border-b border-gray-700 pb-2">快速链接</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-400 hover:text-secondary transition-colors">首页</a></li>
+                        <li><a href="#featured" class="text-gray-400 hover:text-secondary transition-colors">精选邮票</a></li>
+                        <li><a href="#collections" class="text-gray-400 hover:text-secondary transition-colors">邮票系列</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-secondary transition-colors">关于我们</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-secondary transition-colors">联系我们</a></li>
+                    </ul>
+                </div>
+              
+                <div>
+                    <h4 class="text-lg font-bold mb-4 border-b border-gray-700 pb-2">邮票系列</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-secondary transition-colors">历史人物系列</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-secondary transition-colors">自然风光系列</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-secondary transition-colors">文化遗产系列</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-secondary transition-colors">动植物系列</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-secondary transition-colors">艺术作品系列</a></li>
+                    </ul>
+                </div>
+              
+                <div>
+                    <h4 class="text-lg font-bold mb-4 border-b border-gray-700 pb-2">联系我们</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start space-x-3">
+                            <i class="fa fa-map-marker text-secondary mt-1" aria-hidden="true"></i>
+                            <span class="text-gray-400">北京市东城区王府井大街88号邮票收藏馆</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fa fa-phone text-secondary" aria-hidden="true"></i>
+                            <span class="text-gray-400">+86 10 8888 8888</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fa fa-envelope text-secondary" aria-hidden="true"></i>
+                            <span class="text-gray-400">info@stampcollection.com</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fa fa-clock-o text-secondary" aria-hidden="true"></i>
+                            <span class="text-gray-400">9:00 - 17:00 (周二至周日)</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+          
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
+                <p>&copy; 2023 邮票收藏馆. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg transform transition-all duration-300 scale-0 hover:bg-accent">
+        <i class="fa fa-chevron-up" aria-hidden="true"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        // 移动端菜单切换
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+      
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+      
+        // 关闭移动菜单当点击菜单项
+        const mobileMenuItems = mobileMenu.querySelectorAll('a');
+        mobileMenuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+      
+        // 导航栏滚动效果
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('py-2', 'bg-primary/95', 'backdrop-blur-sm');
+                navbar.classList.remove('py-3');
+            } else {
+                navbar.classList.add('py-3');
+                navbar.classList.remove('py-2', 'bg-primary/95', 'backdrop-blur-sm');
+            }
+        });
+      
+        // 返回顶部按钮
+        const backToTopButton = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopButton.classList.remove('scale-0');
+                backToTopButton.classList.add('scale-100');
+            } else {
+                backToTopButton.classList.remove('scale-100');
+                backToTopButton.classList.add('scale-0');
+            }
+        });
+      
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+      
+        // 邮票模态框
+        const stampModal = document.getElementById('stamp-modal');
+        const closeModal = document.getElementById('close-modal');
+        const stampCards = document.querySelectorAll('.stamp-hover');
+      
+        stampCards.forEach(card => {
+            card.addEventListener('click', () => {
+                stampModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+              
+                // 这里可以根据点击的邮票卡片更新模态框内容
+                const title = card.querySelector('h3').textContent;
+                const imgSrc = card.querySelector('img').src;
+                const year = card.querySelector('.fa-calendar-o + span').textContent.split(': ')[1];
+                const country = card.querySelector('.fa-map-marker + span').textContent.split(': ')[1];
+              
+                document.getElementById('modal-stamp-title').textContent = title;
+                document.getElementById('modal-stamp-img').src = imgSrc;
+                document.getElementById('modal-stamp-year').textContent = year;
+                document.getElementById('modal-stamp-country').textContent = country;
+            });
+        });
+      
+        closeModal.addEventListener('click', () => {
+            stampModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        });
+      
+        // 点击模态框外部关闭
+        stampModal.addEventListener('click', (e) => {
+            if (e.target === stampModal) {
+                stampModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        });
+      
+        // ESC键关闭模态框
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !stampModal.classList.contains('hidden')) {
+                stampModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+</body>
+</html>
